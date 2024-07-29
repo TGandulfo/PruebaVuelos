@@ -1,0 +1,64 @@
+Agregar cambios al código principal acá:
+
+<form method="post" action="procesar_vuelo.php" onsubmit="return validarFormularioVuelo()">
+    Origen: <input type="text" name="origen" required><br>
+    Destino: <input type="text" name="destino" required><br>
+    Fecha: <input type="date" name="fecha" required><br>
+    Plazas Disponibles: <input type="number" name="plazas_disponibles" required><br>
+    Precio: <input type="number" step="0.01" name="precio" required><br>
+    <input type="submit" value="Guardar Vuelo">
+</form>
+<?php
+$conexion = mysqli_connect("localhost", "usuario", "contrasena", "AGENCIA");
+
+if (!$conexion) {
+    die("Error al conectar a la base de datos: " . mysqli_connect_error());
+}
+
+$origen = $_POST['origen'];
+$destino = $_POST['destino'];
+$fecha = $_POST['fecha'];
+$plazas_disponibles = $_POST['plazas_disponibles'];
+$precio = $_POST['precio'];
+
+$query = "INSERT INTO VUELO (origen, destino, fecha, plazas_disponibles, precio) VALUES ('$origen', '$destino', '$fecha', $plazas_disponibles, $precio)";
+
+if (mysqli_query($conexion, $query)) {
+    echo "Vuelo registrado correctamente";
+} else {
+    echo "Error al registrar vuelo: " . mysqli_error($conexion);
+}
+;
+
+
+mysqli_close($conexion);
+?>
+<form method="post" action="procesar_hotel.php" onsubmit="return validarFormularioHotel()">
+    Nombre: <input type="text" name="nombre" required><br>
+    Ubicación: <input type="text" name="ubicacion" required><br>
+    Habitaciones Disponibles: <input type="number" name="habitaciones_disponibles" required><br>
+    Tarifa por Noche: <input type="number" step="0.01" name="tarifa_noche" required><br>
+    <input type="submit" value="Guardar Hotel">
+</form>
+<?php
+$conexion = mysqli_connect("localhost", "usuario", "contrasena", "AGENCIA");
+
+if (!$conexion) {
+    die("Error al conectar a la base de datos: " . mysqli_connect_error());
+}
+
+$nombre = $_POST['nombre'];
+$ubicacion = $_POST['ubicacion'];
+$habitaciones_disponibles = $_POST['habitaciones_disponibles'];
+$tarifa_noche = $_POST['tarifa_noche'];
+
+$query = "INSERT INTO HOTEL (nombre, ubicacion, habitaciones_disponibles, tarifa_noche) VALUES ('$nombre', '$ubicacion', $habitaciones_disponibles, $tarifa_noche)";
+
+if (mysqli_query($conexion, $query)) {
+    echo "Hotel registrado correctamente";
+} else {
+    echo "Error al registrar hotel: " . mysqli_error($conexion);
+}
+
+mysqli_close($conexion);
+?>
